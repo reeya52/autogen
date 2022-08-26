@@ -1,6 +1,5 @@
 from api_writer import write_program_header, write_singleton_api, write_collection_api
 import os
-from pprint import pp
 import socket
 import urllib, xmltodict
 import json
@@ -38,11 +37,15 @@ def get_resource_paths(url):
         json_data = json.dumps(xml_schema, indent=4)
         schema = json.loads(json_data)
 
-        for data in schema['edmx:Edmx']['edmx:DataServices']['Schema']:
-            for key,item in data['EntityType'].items():
+        schema_data = schema['edmx:Edmx']['edmx:DataServices']['Schema']
+        if type(schema_data[0]['EntityType']) == dict:
+            for key, item in schema_data[0]['EntityType'].items():
+                if key == 'Annotation':
+                    path_list = item[5]["Collection"]["String"]    
+        else:
+            for key, item in schema_data[0]['EntityType'][0].items():
                 if key == 'Annotation':
                     path_list = item[5]["Collection"]["String"]
-                    # print(path_list)
 
         # get resource type from Namespace (Ex. Chassis, Port, NetworkAdapter, Manager, etc)
         resource = schema['edmx:Edmx']['edmx:DataServices']['Schema'][0]['@Namespace']
