@@ -45,18 +45,25 @@ def get_resource_paths(url):
             resource = schema['edmx:Edmx']['edmx:DataServices']['Schema']['@Namespace']
             resource = resource[7:15]
 
-        if resource == 'Registry':
-            for k,i in schema['edmx:Edmx']['edmx:DataServices']['Schema'].items():
-                if k == 'EntityType':
-                    for key, item in i.items():
-                        if key == 'Annotation':
-                            path_list = item[5]['Collection']['String']
-        else:
-            for data in schema['edmx:Edmx']['edmx:DataServices']['Schema']:
-                for key,item in data['EntityType'].items():
+        schema_data = schema['edmx:Edmx']['edmx:DataServices']['Schema']
+        if type(schema_data) == list:
+            if type(schema_data[0]['EntityType']) == dict:
+                for key, item in schema_data[0]['EntityType'].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]    
+            else:
+                for key, item in schema_data[0]['EntityType'][0].items():
                     if key == 'Annotation':
                         path_list = item[5]["Collection"]["String"]
-                        # print(path_list)
+        else:
+            if type(schema_data['EntityType']) == dict:
+                for key, item in schema_data['EntityType'].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]    
+            else:
+                for key, item in schema_data['EntityType'][0].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]
 
         return resource, path_list
 

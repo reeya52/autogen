@@ -38,14 +38,24 @@ def get_resource_paths(url):
         schema = json.loads(json_data)
 
         schema_data = schema['edmx:Edmx']['edmx:DataServices']['Schema']
-        if type(schema_data[0]['EntityType']) == dict:
-            for key, item in schema_data[0]['EntityType'].items():
-                if key == 'Annotation':
-                    path_list = item[5]["Collection"]["String"]    
+        if type(schema_data) == list:
+            if type(schema_data[0]['EntityType']) == dict:
+                for key, item in schema_data[0]['EntityType'].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]    
+            else:
+                for key, item in schema_data[0]['EntityType'][0].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]
         else:
-            for key, item in schema_data[0]['EntityType'][0].items():
-                if key == 'Annotation':
-                    path_list = item[5]["Collection"]["String"]
+            if type(schema_data['EntityType']) == dict:
+                for key, item in schema_data['EntityType'].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]    
+            else:
+                for key, item in schema_data['EntityType'][0].items():
+                    if key == 'Annotation':
+                        path_list = item[5]["Collection"]["String"]
 
         # get resource type from Namespace (Ex. Chassis, Port, NetworkAdapter, Manager, etc)
         resource = schema['edmx:Edmx']['edmx:DataServices']['Schema'][0]['@Namespace']
