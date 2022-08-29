@@ -9,7 +9,7 @@ from service_api_writer import write_service_program_header, write_service_singl
 xml_schema_examples='''
 https://redfish.dmtf.org/schemas/v1/SessionService_v1.xml
 https://redfish.dmtf.org/schemas/v1/Session_v1.xml
-https://redfish.dmtf.org/schemas/v1/MessageRegistryFileCollection_v1.xml
+https://redfish.dmtf.org/schemas/v1/MessageRegistryFile_v1.xml
 '''
 
 def write_service_program(resource_path, outfile, resource, collection_path, instance):

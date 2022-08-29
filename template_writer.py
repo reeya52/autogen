@@ -49,7 +49,8 @@ def write_template(outfile, resource_path, json_schema):
 
     # All the template will have required properties -
     #  "@odata.id", "@odata.type", "Id", "Name"
-    required_properties = json_schema["definitions"]["Chassis"]["required"]
+    resource = json_schema['$ref'].split('/')[-1]
+    required_properties = json_schema["definitions"][resource]["required"]
 
     for req_prop in required_properties:
         if req_prop == '@odata.id':

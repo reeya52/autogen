@@ -79,7 +79,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
         if arg_str == original_path:
             outfile.write("\tdef get(self):\n")
             outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
-            outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(original_path[1:]))
+            outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(original_path))
         else:
             outfile.write("\tdef get(self, {0}):\n".format(arg_str))
             outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
@@ -90,28 +90,40 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
 
     # Write POST method
     outfile.write("\t# HTTP POST\n")
-    outfile.write("\tdef post(self):\n")
+    if collection_path != '' and arg_str != original_path:
+        outfile.write("\tdef post(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef post(self):\n")
     outfile.write("\t\tlogging.info('{0} post called')\n".format(resource))
     outfile.write("\t\treturn 'POST is not a supported command for {0}API', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PUT method
     outfile.write("\t# HTTP PUT\n")
-    outfile.write("\tdef put(self):\n")
+    if collection_path != '' and arg_str != original_path:
+        outfile.write("\tdef put(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef put(self):\n")
     outfile.write("\t\tlogging.info('{0} put called')\n".format(resource))
     outfile.write("\t\treturn 'PUT is not a supported command for {0}API', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PATCH method
     outfile.write("\t# HTTP PATCH\n")
-    outfile.write("\tdef patch(self):\n")
+    if collection_path != '' and arg_str != original_path:
+        outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef patch(self):\n")
     outfile.write("\t\tlogging.info('{0} patch called')\n".format(resource))
     outfile.write("\t\treturn 'PATCH is not a supported command for {0}API', 405\n".format(resource))
     outfile.write('\n')
 
     # Write DELETE method
     outfile.write("\t# HTTP DELETE\n")
-    outfile.write("\tdef delete(self):\n")
+    if collection_path != '' and arg_str != original_path:
+        outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef delete(self):\n")
     outfile.write("\t\tlogging.info('{0} delete called')\n".format(resource))
     outfile.write("\t\treturn 'DELETE is not a supported command for {0}API', 405\n".format(resource))
     outfile.write('\n\n')
@@ -132,7 +144,7 @@ def write_servicetype_collection_api(outfile, resource, collection_path):
     # Write GET method
     outfile.write("\t# HTTP GET\n")
     arg_str = get_function_parameters(collection_path[1:])
-    if arg_str == collection_path[1:]:
+    if arg_str == collection_path[1:] or not arg_str:
         outfile.write("\tdef get(self):\n")
         outfile.write("\t\tlogging.info('{0} Collection get called')\n".format(resource))
         outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(collection_path[1:]))
@@ -146,28 +158,40 @@ def write_servicetype_collection_api(outfile, resource, collection_path):
 
     # Write POST method
     outfile.write("\t# HTTP POST\n")
-    outfile.write("\tdef post(self):\n")
+    if arg_str != collection_path[1:] and arg_str:
+        outfile.write("\tdef post(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef post(self):\n")
     outfile.write("\t\tlogging.info('{0} Collection post called')\n".format(resource))
     outfile.write("\t\treturn 'POST is not a supported command for {0}CollectionAPI', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PUT method
     outfile.write("\t# HTTP PUT\n")
-    outfile.write("\tdef put(self):\n")
+    if arg_str != collection_path[1:] and arg_str:
+        outfile.write("\tdef put(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef put(self):\n")
     outfile.write("\t\tlogging.info('{0} Collection put called')\n".format(resource))
     outfile.write("\t\treturn 'PUT is not a supported command for {0}CollectionAPI', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PATCH method
     outfile.write("\t# HTTP PATCH\n")
-    outfile.write("\tdef patch(self):\n")
+    if arg_str != collection_path[1:] and arg_str:
+        outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef patch(self):\n")
     outfile.write("\t\tlogging.info('{0} Collection patch called')\n".format(resource))
     outfile.write("\t\treturn 'PATCH is not a supported command for {0}CollectionAPI', 405\n".format(resource))
     outfile.write('\n')
 
     # Write DELETE method
     outfile.write("\t# HTTP DELETE\n")
-    outfile.write("\tdef delete(self):\n")
+    if arg_str != collection_path[1:] and arg_str:
+        outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
+    else:
+        outfile.write("\tdef delete(self):\n")
     outfile.write("\t\tlogging.info('{0} Collection delete called')\n".format(resource))
     outfile.write("\t\treturn 'DELETE is not a supported command for {0}CollectionAPI', 405\n".format(resource))
     outfile.write('\n\n')
@@ -189,48 +213,55 @@ def write_servicetype_singleton_api(outfile, resource, collection_path, instance
 
     sub_path = collection_path[1:].split("/")
     object_ids = [i for j, i in enumerate(sub_path) if j % 2 != 0]
-    for obj in object_ids:
-        if '{' in obj :
-            arg_str = get_function_parameters(original_path)
-            outfile.write("\tdef get(self, {0}):\n".format(arg_str))
-            outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
+    if object_ids:
+        for obj in object_ids:
+            if '{' in obj :
+                arg_str = get_function_parameters(original_path)
+                outfile.write("\tdef get(self, {0}):\n".format(arg_str))
+                outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
 
-            new_collection_path = get_path_parameters(original_path)
-            outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+                new_collection_path = get_path_parameters(original_path)
+                outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
 
-            break
-        else:
-            arg_str = instance.replace('{', '').replace('}', '')
-            original_path = collection_path[1:] + '/' + '{0}'
-            outfile.write("\tdef get(self, {0}):\n".format(arg_str))
-            outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
-            outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(original_path, arg_str))
+                break
+            else:
+                arg_str = instance.replace('{', '').replace('}', '')
+                original_path = collection_path[1:] + '/' + '{0}'
+                outfile.write("\tdef get(self, {0}):\n".format(arg_str))
+                outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
+                outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(original_path, arg_str))
+    else:
+        arg_str = instance.replace('{', '').replace('}', '')
+        original_path = collection_path[1:] + '/' + '{0}'
+        outfile.write("\tdef get(self, {0}):\n".format(arg_str))
+        outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
+        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(original_path, arg_str))
     outfile.write("\t\treturn get_json_data (path)\n\n")
 
     # Write POST method
     outfile.write("\t# HTTP POST\n")
-    outfile.write("\tdef post(self):\n")
+    outfile.write("\tdef post(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} post called')\n".format(resource))
     outfile.write("\t\treturn 'POST is not a supported command for {0}API', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PUT method
     outfile.write("\t# HTTP PUT\n")
-    outfile.write("\tdef put(self):\n")
+    outfile.write("\tdef put(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} put called')\n".format(resource))
     outfile.write("\t\treturn 'PUT is not a supported command for {0}API', 405\n".format(resource))
     outfile.write("\n")
 
     # Write PATCH method
     outfile.write("\t# HTTP PATCH\n")
-    outfile.write("\tdef patch(self):\n")
+    outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} patch called')\n".format(resource))
     outfile.write("\t\treturn 'PATCH is not a supported command for {0}API', 405\n".format(resource))
     outfile.write('\n')
 
     # Write DELETE method
     outfile.write("\t# HTTP DELETE\n")
-    outfile.write("\tdef delete(self):\n")
+    outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} delete called')\n".format(resource))
     outfile.write("\t\treturn 'DELETE is not a supported command for {0}API', 405\n".format(resource))
     outfile.write('\n\n')
