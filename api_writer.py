@@ -1,3 +1,4 @@
+from operator import pos
 import re
 from api_writer_utils import get_function_parameters, get_path_parameters, get_wildcard_parameters
 
@@ -67,16 +68,18 @@ def write_collection_api(outfile, resource, resource_num, collection_path):
     # Write GET method
     outfile.write("\t# HTTP GET\n")
 
-    arg_str = get_function_parameters(collection_path)
+    arg_str = get_function_parameters(collection_path[1:])
     if(arg_str == ''):
         outfile.write("\tdef get(self):\n")
     else:
         outfile.write("\tdef get(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} Collection get called')\n".format(resource_num))
 
-    new_collection_path = get_path_parameters(collection_path)
-    if new_collection_path == collection_path:
-        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(collection_path))
+    new_collection_path = get_path_parameters(collection_path[1:])
+    if collection_path == '':
+        outfile.write("\t\tpath = os.path.join(self.root, 'index.json')\n")
+    elif arg_str == '':
+        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(collection_path[1:]))
     else:
         outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
     outfile.write("\t\treturn get_json_data (path)\n\n")
@@ -95,8 +98,10 @@ def write_collection_api(outfile, resource, resource_num, collection_path):
         outfile.write("\t\t\tresp = 404\n")
         outfile.write("\t\t\treturn resp\n")
     
-    if new_collection_path == collection_path:
-        outfile.write("\t\tpath = create_path(self.root, '{0}')\n".format(collection_path))
+    if collection_path == '':
+        outfile.write("\t\tpath = create_path(self.root)\n")
+    elif arg_str == '':
+        outfile.write("\t\tpath = create_path(self.root, '{0}')\n".format(collection_path[1:]))
     else:
         outfile.write("\t\tpath = create_path(self.root, '{0}').format({1})\n".format(new_collection_path, arg_str))
     outfile.write("\t\treturn create_collection (path, '{0}')\n\n".format(resource))
@@ -108,8 +113,10 @@ def write_collection_api(outfile, resource, resource_num, collection_path):
     else:
         outfile.write("\tdef put(self, {0}):\n".format(arg_str))
     
-    if new_collection_path == collection_path:
-        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(collection_path))
+    if collection_path == '':
+        outfile.write("\t\tpath = os.path.join(self.root, 'index.json')\n")
+    elif arg_str == '':
+        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(collection_path[1:]))
     else:
         outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
     outfile.write("\t\tput_object (path)\n")
@@ -134,13 +141,20 @@ def write_singleton_api(outfile, resource_num, collection_path, instance):
     
     # Write GET method
     outfile.write("\t# HTTP GET\n")
-    original_path = collection_path + '/' + instance
+    original_path = collection_path[1:] + '/' + instance
     arg_str = get_function_parameters(original_path)
-    outfile.write("\tdef get(self, {0}):\n".format(arg_str))
+
+    if arg_str == '':
+        outfile.write("\tdef get(self):\n")
+    else:
+        outfile.write("\tdef get(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} get called')\n".format(resource_num))
 
     new_collection_path = get_path_parameters(original_path)
-    outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+    if new_collection_path == '' or  new_collection_path == '/':
+        outfile.write("\t\tpath = create_path(self.root, 'index.json')\n")
+    else:
+        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
     outfile.write("\t\treturn get_json_data (path)\n\n")
 
     # Write POST method
@@ -149,29 +163,57 @@ def write_singleton_api(outfile, resource_num, collection_path, instance):
     outfile.write("\t# - Update the members and members.id lists\n")
     outfile.write("\t# - Attach the APIs of subordinate resources (do this only once)\n")
     outfile.write("\t# - Finally, create an instance of the subordiante resources\n")
-    outfile.write("\tdef post(self, {0}):\n".format(arg_str))
-    outfile.write("\t\tlogging.info('{0} post called')\n".format(resource_num))
-    outfile.write("\t\tpath = create_path(self.root, '{0}').format({1})\n".format(new_collection_path, arg_str))
 
-    collection_arg_str = get_function_parameters(collection_path)
-    post_collection_path = get_path_parameters(collection_path)
-    outfile.write("\t\tcollection_path = os.path.join(self.root, '{0}', 'index.json').format({1})\n\n".format(post_collection_path, collection_arg_str))
+    if arg_str == '':
+        outfile.write("\tdef post(self):\n")
+    else:
+        outfile.write("\tdef post(self, {0}):\n".format(arg_str))
+    outfile.write("\t\tlogging.info('{0} post called')\n".format(resource_num))
+
+    if arg_str == '':
+        outfile.write("\t\tpath = create_path(self.root)\n")
+    else:
+        outfile.write("\t\tpath = create_path(self.root, '{0}').format({1})\n".format(new_collection_path, arg_str))
+
+    collection_arg_str = get_function_parameters(collection_path[1:])
+    post_collection_path = get_path_parameters(collection_path[1:])
+
+    if post_collection_path == '':
+        outfile.write("\t\tcollection_path = os.path.join(self.root, 'index.json')\n\n")
+    if collection_arg_str == '':
+        outfile.write("\t\tcollection_path = os.path.join(self.root, '{0}', 'index.json')\n\n".format(post_collection_path))
+    else:
+        outfile.write("\t\tcollection_path = os.path.join(self.root, '{0}', 'index.json').format({1})\n\n".format(post_collection_path, collection_arg_str))
+    
     outfile.write("\t\t# Check if collection exists:\n")
     outfile.write("\t\tif not os.path.exists(collection_path):\n")
-    outfile.write("\t\t\t{0}CollectionAPI.post(self, {1})\n\n".format(resource_num, collection_arg_str))
+
+    if collection_arg_str == '':
+        outfile.write("\t\t\t{0}CollectionAPI.post(self)\n\n".format(resource_num))
+    else:
+        outfile.write("\t\t\t{0}CollectionAPI.post(self, {1})\n\n".format(resource_num, collection_arg_str))
 
     inst = instance.replace('{', '').replace('}', '')
-    outfile.write("\t\tif {0} in members:\n".format(inst))
-    outfile.write("\t\t\tresp = 404\n")
-    outfile.write("\t\t\treturn resp\n")
-    outfile.write("\t\ttry:\n")
-    outfile.write("\t\t\tglobal config\n")
+    if inst == '':
+        outfile.write("\t\ttry:\n")
+        outfile.write("\t\t\tglobal config\n")
 
-    wildcard_str = get_wildcard_parameters(arg_str)
-    outfile.write("\t\t\twildcards = "+"{"+"{0}'rb':g.rest_base".format(wildcard_str)+"}"+"\n")
-    outfile.write("\t\t\tconfig=get_{0}_instance(wildcards)\n".format(resource_num))
-    outfile.write("\t\t\tconfig = create_and_patch_object (config, members, member_ids, path, collection_path)\n")
-    outfile.write("\t\t\tresp = config, 200\n\n")
+        outfile.write("\t\t\twildcards = "+"{"+"'rb':g.rest_base"+"}"+"\n")
+        outfile.write("\t\t\tconfig=get_{0}_instance(wildcards)\n".format(resource_num))
+        outfile.write("\t\t\tconfig = create_and_patch_object (config, members, member_ids, path, collection_path)\n")
+        outfile.write("\t\t\tresp = config, 200\n\n")
+    else:
+        outfile.write("\t\tif {0} in members:\n".format(inst))
+        outfile.write("\t\t\tresp = 404\n")
+        outfile.write("\t\t\treturn resp\n")
+        outfile.write("\t\ttry:\n")
+        outfile.write("\t\t\tglobal config\n")
+
+        wildcard_str = get_wildcard_parameters(arg_str)
+        outfile.write("\t\t\twildcards = "+"{"+"{0}'rb':g.rest_base".format(wildcard_str)+"}"+"\n")
+        outfile.write("\t\t\tconfig=get_{0}_instance(wildcards)\n".format(resource_num))
+        outfile.write("\t\t\tconfig = create_and_patch_object (config, members, member_ids, path, collection_path)\n")
+        outfile.write("\t\t\tresp = config, 200\n\n")
     outfile.write("\t\texcept Exception:\n")
     outfile.write("\t\t\ttraceback.print_exc()\n")
     outfile.write("\t\t\tresp = INTERNAL_ERROR\n")
@@ -181,38 +223,65 @@ def write_singleton_api(outfile, resource_num, collection_path, instance):
 
     # Write PUT method
     outfile.write("\t# HTTP PUT\n")
-    outfile.write("\tdef put(self, {0}):\n".format(arg_str))
+
+    if arg_str == '':
+        outfile.write("\tdef put(self):\n")
+    else:
+        outfile.write("\tdef put(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} put called')\n".format(resource_num))
 
-    sub_arg = re.split(', ', arg_str)
-    if(len(sub_arg) == 2):
-        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+    if arg_str == '':
+        outfile.write("\t\tpath = create_path(self.root, 'index.json')\n")
+        outfile.write("\t\tput_object(path)\n")
+        outfile.write("\t\treturn self.get()\n\n")
     else:
-        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
-    outfile.write("\t\tput_object(path)\n")
-    outfile.write("\t\treturn self.get({0})\n\n".format(arg_str))
+        sub_arg = re.split(', ', arg_str)
+        if(len(sub_arg) == 2):
+            outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+        else:
+            outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+        outfile.write("\t\tput_object(path)\n")
+        outfile.write("\t\treturn self.get({0})\n\n".format(arg_str))
 
     # Write PATCH method
     outfile.write("\t# HTTP PATCH\n")
-    outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
+    if arg_str == '':
+        outfile.write("\tdef patch(self):\n")
+    else:
+        outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
     outfile.write("\t\tlogging.info('{0} patch called')\n".format(resource_num))
 
-    if(len(sub_arg) == 2):
-        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+    if arg_str == '':
+        outfile.write("\t\tpath = create_path(self.root, 'index.json')\n")
+        outfile.write("\t\tpatch_object(path)\n")
+        outfile.write("\t\treturn self.get()\n\n")
     else:
-        outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
-    outfile.write("\t\tpatch_object(path)\n")
-    outfile.write("\t\treturn self.get({0})\n\n".format(arg_str))
+        if(len(sub_arg) == 2):
+            outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+        else:
+            outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+        outfile.write("\t\tpatch_object(path)\n")
+        outfile.write("\t\treturn self.get({0})\n\n".format(arg_str))
 
     # Write DELETE method
     outfile.write("\t# HTTP DELETE\n")
-    outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
-    outfile.write("\t\tlogging.info('{0} delete called')\n".format(resource_num))
-    outfile.write("\t\tpath = create_path(self.root, '{0}').format({1})\n".format(new_collection_path, arg_str))
 
-    base_collection_path = get_path_parameters(collection_path)
-    base_arg_str = get_function_parameters(collection_path)
-    if(base_arg_str == ''):
+    if arg_str == '':
+        outfile.write("\tdef delete(self):\n")
+    else:
+        outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
+    outfile.write("\t\tlogging.info('{0} delete called')\n".format(resource_num))
+
+    if arg_str == '':
+        outfile.write("\t\tpath = create_path(self.root)\n")
+    else:
+        outfile.write("\t\tpath = create_path(self.root, '{0}').format({1})\n".format(new_collection_path, arg_str))
+
+    base_collection_path = get_path_parameters(collection_path[1:])
+    base_arg_str = get_function_parameters(collection_path[1:])
+    if base_collection_path == '':
+        outfile.write("\t\tbase_path = create_path(self.root)\n")
+    elif(base_arg_str == ''):
         outfile.write("\t\tbase_path = create_path(self.root, '{0}')\n".format(base_collection_path))
     else:
         outfile.write("\t\tbase_path = create_path(self.root, '{0}').format({1})\n".format(base_collection_path, base_arg_str))

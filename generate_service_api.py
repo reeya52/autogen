@@ -37,13 +37,13 @@ def get_resource_paths(url):
         json_data = json.dumps(xml_schema, indent=4)
         schema = json.loads(json_data)
 
-        try:
-            # get service type from Namespace (Ex. SessionService, AccountService, etc)
-            resource = schema['edmx:Edmx']['edmx:DataServices']['Schema'][0]['@Namespace']
-        except:
-             # get registry type from Namespace (Ex. MessageRegistryFileCollection)
-            resource = schema['edmx:Edmx']['edmx:DataServices']['Schema']['@Namespace']
-            resource = resource[7:15]
+        # try:
+        #     # get service type from Namespace (Ex. SessionService, AccountService, etc)
+        #     resource = schema['edmx:Edmx']['edmx:DataServices']['Schema'][0]['@Namespace']
+        # except:
+        #      # get registry type from Namespace (Ex. MessageRegistryFileCollection)
+        #     resource = schema['edmx:Edmx']['edmx:DataServices']['Schema']['@Namespace']
+        #     resource = resource[7:15]
 
         schema_data = schema['edmx:Edmx']['edmx:DataServices']['Schema']
         if type(schema_data) == list:
@@ -65,6 +65,8 @@ def get_resource_paths(url):
                     if key == 'Annotation':
                         path_list = item[5]["Collection"]["String"]
 
+        # get resource type from Namespace (Ex. Chassis, Port, NetworkAdapter, Manager, etc)
+        resource = schema['edmx:Edmx']['edmx:DataServices']['Schema'][0]['@Namespace']
         return resource, path_list
 
     except urllib.error.HTTPError as e:
@@ -108,8 +110,8 @@ if __name__=='__main__':
             head = head.replace('/redfish/v1', '')
             # base program name is different for different paths
             resource_num = resource + str(num)
-            num = num + 1
             program_name = '{0}_api.py'.format(resource_num)
+            num = num + 1
             status = create_service_api_program(path, program_name, resource_num, head, tail)
             print(status)
 

@@ -39,9 +39,7 @@ _TEMPLATE = \
 	"@odata.id": "{rb}Chassis/{ChassisId}/NetworkAdapters/{NetworkAdapterId}",
 	"@odata.type": "#NetworkAdapter.v1_9_0.NetworkAdapter",
 	"Id": "{NetworkAdapterId}",
-	"Name": "Network Adapter",
-	"Description": "Network Adapter",
-	"SerialNumber": "003BFLRT00023234"
+	"Name": "Network Adapter View",
 }
 
 def get_NetworkAdapter_instance(wildcards):

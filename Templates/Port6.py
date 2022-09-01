@@ -35,11 +35,11 @@ from flask import json
 
 _TEMPLATE = \
 {
-"@Redfish.Copyright": "Copyright 2014-2021 SNIA. All rights reserved.",
-"@odata.id": "{rb}Systems/{ComputerSystemId}/Processors/{ProcessorId}/Ports/{PortId}",
-"@odata.type": "#Port.v1_6_1.Port",
-"Id": "{PortId}",
-"Name": System Port,
+	"@Redfish.Copyright": "Copyright 2014-2021 SNIA. All rights reserved.",
+	"@odata.id": "{rb}Systems/{ComputerSystemId}/Processors/{ProcessorId}/Ports/{PortId}",
+	"@odata.type": "#Port.v1_6_1.Port",
+	"Id": "{PortId}",
+	"Name": "Port View 1",
 }
 
 def get_Port6_instance(wildcards):
@@ -51,16 +51,16 @@ def get_Port6_instance(wildcards):
 		c = copy.deepcopy(_TEMPLATE)
 		d = json.dumps(c)
 		g = d.replace('{ComputerSystemId}', '0')
-		g = d.replace('{ProcessorId}', '1')
-		g = d.replace('{PortId}', '2')
+		g = g.replace('{ProcessorId}', '0')
+		g = g.replace('{PortId}', '1')
 		g = g.replace('{rb}', 'NUb')
 		g = g.replace('{{', '~~!')
 		g = g.replace('}}', '!!~')
 		g = g.replace('{', '~!')
 		g = g.replace('}', '!~')
-		g = d.replace('0', '{ComputerSystemId}')
-		g = d.replace('1', '{ProcessorId}')
-		g = d.replace('2', '{PortId}')
+		g = g.replace('0', '{ComputerSystemId}')
+		g = g.replace('1', '{ProcessorId}')
+		g = g.replace('2', '{PortId}')
 		g = g.replace('NUb', '{rb}')
 		g = g.format(**wildcards)
 		g = g.replace('~~!', '{{')

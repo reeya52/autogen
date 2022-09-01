@@ -35,11 +35,11 @@ from flask import json
 
 _TEMPLATE = \
 {
-"@Redfish.Copyright": "Copyright 2014-2021 SNIA. All rights reserved.",
-"@odata.id": "{rb}Managers/{ManagerId}/USBPorts/{PortId}",
-"@odata.type": "#Port.v1_6_1.Port",
-"Id": "{PortId}",
-"Name": USB port,
+	"@Redfish.Copyright": "Copyright 2014-2021 SNIA. All rights reserved.",
+	"@odata.id": "{rb}Managers/{ManagerId}/USBPorts/{PortId}",
+	"@odata.type": "#Port.v1_6_1.Port",
+	"Id": "{PortId}",
+	"Name": "Port View 1",
 }
 
 def get_Port20_instance(wildcards):
@@ -51,14 +51,14 @@ def get_Port20_instance(wildcards):
 		c = copy.deepcopy(_TEMPLATE)
 		d = json.dumps(c)
 		g = d.replace('{ManagerId}', '0')
-		g = d.replace('{PortId}', '1')
+		g = g.replace('{PortId}', '0')
 		g = g.replace('{rb}', 'NUb')
 		g = g.replace('{{', '~~!')
 		g = g.replace('}}', '!!~')
 		g = g.replace('{', '~!')
 		g = g.replace('}', '!~')
-		g = d.replace('0', '{ManagerId}')
-		g = d.replace('1', '{PortId}')
+		g = g.replace('0', '{ManagerId}')
+		g = g.replace('1', '{PortId}')
 		g = g.replace('NUb', '{rb}')
 		g = g.format(**wildcards)
 		g = g.replace('~~!', '{{')

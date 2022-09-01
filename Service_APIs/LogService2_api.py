@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# LogService2 does not have a Collection API
-
-
 # LogService2 Collection API
 class LogService2CollectionAPI(Resource):
 	def __init__(self):
@@ -54,28 +51,28 @@ class LogService2CollectionAPI(Resource):
 		self.root = PATHS['Root']
 
 	# HTTP GET
-	def get(self):
+	def get(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService2 Collection get called')
-		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/LogServices', 'index.json')
+		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/LogServices', 'index.json').format(ResourceBlockId, ComputerSystemId)
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService2 Collection post called')
 		return 'POST is not a supported command for LogService2CollectionAPI', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService2 Collection put called')
 		return 'PUT is not a supported command for LogService2CollectionAPI', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService2 Collection patch called')
 		return 'PATCH is not a supported command for LogService2CollectionAPI', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService2 Collection delete called')
 		return 'DELETE is not a supported command for LogService2CollectionAPI', 405
 
@@ -87,34 +84,28 @@ class LogService2API(Resource):
 		self.root = PATHS['Root']
 
 	# HTTP GET
-	def get(self, LogServiceId):
+	def get(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService2 get called')
-		path = create_path(self.root, 'CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/LogServices/{0}', 'index.json').format(LogServiceId)
-	def get(self, LogServiceId):
-		logging.info('LogService2 get called')
-		path = create_path(self.root, 'CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/LogServices/{0}', 'index.json').format(LogServiceId)
-	def get(self, LogServiceId):
-		logging.info('LogService2 get called')
-		path = create_path(self.root, 'CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/LogServices/{0}', 'index.json').format(LogServiceId)
+		path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/LogServices/{2}', 'index.json').format(ResourceBlockId, ComputerSystemId, LogServiceId)
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService2 post called')
 		return 'POST is not a supported command for LogService2API', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService2 put called')
 		return 'PUT is not a supported command for LogService2API', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService2 patch called')
 		return 'PATCH is not a supported command for LogService2API', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService2 delete called')
 		return 'DELETE is not a supported command for LogService2API', 405
 

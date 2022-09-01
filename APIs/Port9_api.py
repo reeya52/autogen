@@ -52,26 +52,26 @@ class Port9CollectionAPI(Resource):
 		self.root = PATHS['Root']
 
 	# HTTP GET
-	def get(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports):
+	def get(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId):
 		logging.info('Port9 Collection get called')
-		path = os.path.join(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 		return get_json_data (path)
 
 	# HTTP POST Collection
-	def post(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports):
+	def post(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId):
 		logging.info('Port9 Collection post called')
 
-		if CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports in members:
+		if StorageControllerId in members:
 			resp = 404
 			return resp
-		path = create_path(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+		path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 		return create_collection (path, 'Port')
 
 	# HTTP PUT Collection
-	def put(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports):
-		path = os.path.join(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+	def put(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId):
+		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 		put_object (path)
-		return self.get(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+		return self.get(ResourceBlockId)
 
 # Port9 API
 class Port9API(Resource):
@@ -80,9 +80,9 @@ class Port9API(Resource):
 		self.root = PATHS['Root']
 
 	# HTTP GET
-	def get(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}):
+	def get(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId):
 		logging.info('Port9 get called')
-		path = create_path(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}/{PortId}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
+		path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports/{4}', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
 		return get_json_data (path)
 
 	# HTTP POST
@@ -90,21 +90,21 @@ class Port9API(Resource):
 	# - Update the members and members.id lists
 	# - Attach the APIs of subordinate resources (do this only once)
 	# - Finally, create an instance of the subordiante resources
-	def post(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}):
+	def post(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId):
 		logging.info('Port9 post called')
-		path = create_path(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}/{PortId}').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
-		collection_path = os.path.join(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+		path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports/{4}').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
+		collection_path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 
 		# Check if collection exists:
 		if not os.path.exists(collection_path):
-			Port9CollectionAPI.post(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+			Port9CollectionAPI.post(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 
 		if PortId in members:
 			resp = 404
 			return resp
 		try:
 			global config
-			wildcards = {'CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}':CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}, 'rb':g.rest_base}
+			wildcards = {'ResourceBlockId':ResourceBlockId, 'ComputerSystemId':ComputerSystemId, 'StorageId':StorageId, 'StorageControllerId':StorageControllerId, 'PortId':PortId, 'rb':g.rest_base}
 			config=get_Port9_instance(wildcards)
 			config = create_and_patch_object (config, members, member_ids, path, collection_path)
 			resp = config, 200
@@ -116,23 +116,23 @@ class Port9API(Resource):
 		return resp
 
 	# HTTP PUT
-	def put(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}):
+	def put(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId):
 		logging.info('Port9 put called')
-		path = os.path.join(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}/{PortId}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
+		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports/{4}', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
 		put_object(path)
-		return self.get(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
+		return self.get(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
 
 	# HTTP PATCH
-	def patch(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}):
+	def patch(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId):
 		logging.info('Port9 patch called')
-		path = os.path.join(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}/{PortId}', 'index.json').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
+		path = os.path.join(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports/{4}', 'index.json').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
 		patch_object(path)
-		return self.get(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
+		return self.get(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
 
 	# HTTP DELETE
-	def delete(self, CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId}):
+	def delete(self, ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId):
 		logging.info('Port9 delete called')
-		path = create_path(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}/{PortId}').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports/{PortId})
-		base_path = create_path(self.root, 'CompositionService/{0}/{ResourceBlockId}/{1}/{ComputerSystemId}/{2}/{{2}Id}/{2}Controllers/{{2}ControllerId}/{4}').format(CompositionService/ResourceBlocks/{ResourceBlockId}/Systems/{ComputerSystemId}/Storage/{StorageId}/StorageControllers/{StorageControllerId}/Ports)
+		path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports/{4}').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId, PortId)
+		base_path = create_path(self.root, 'CompositionService/ResourceBlocks/{0}/Systems/{1}/Storage/{2}/StorageControllers/{3}/Ports').format(ResourceBlockId, ComputerSystemId, StorageId, StorageControllerId)
 		return delete_object(path, base_path)
 

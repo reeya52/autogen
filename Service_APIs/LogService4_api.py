@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# LogService4 does not have a Collection API
-
-
 # LogService4 Collection API
 class LogService4CollectionAPI(Resource):
 	def __init__(self):
@@ -60,22 +57,22 @@ class LogService4CollectionAPI(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ChassisId):
 		logging.info('LogService4 Collection post called')
 		return 'POST is not a supported command for LogService4CollectionAPI', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ChassisId):
 		logging.info('LogService4 Collection put called')
 		return 'PUT is not a supported command for LogService4CollectionAPI', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ChassisId):
 		logging.info('LogService4 Collection patch called')
 		return 'PATCH is not a supported command for LogService4CollectionAPI', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ChassisId):
 		logging.info('LogService4 Collection delete called')
 		return 'DELETE is not a supported command for LogService4CollectionAPI', 405
 
@@ -93,22 +90,22 @@ class LogService4API(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ChassisId, LogServiceId):
 		logging.info('LogService4 post called')
 		return 'POST is not a supported command for LogService4API', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ChassisId, LogServiceId):
 		logging.info('LogService4 put called')
 		return 'PUT is not a supported command for LogService4API', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ChassisId, LogServiceId):
 		logging.info('LogService4 patch called')
 		return 'PATCH is not a supported command for LogService4API', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ChassisId, LogServiceId):
 		logging.info('LogService4 delete called')
 		return 'DELETE is not a supported command for LogService4API', 405
 

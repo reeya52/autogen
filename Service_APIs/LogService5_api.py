@@ -56,7 +56,7 @@ class LogService5API(Resource):
 	# HTTP GET
 	def get(self):
 		logging.info('LogService5 get called')
-		path = os.path.join(self.root, 'obService/Log', 'index.json')
+		path = os.path.join(self.root, 'JobService/Log', 'index.json')
 		return get_json_data (path)
 
 	# HTTP POST

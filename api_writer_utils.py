@@ -5,32 +5,35 @@ def get_function_parameters(path):
     ''' get parameters for function definition'''
     sub_path = re.split(r"\/", path)
     arg_str = ''
-    object_ids = [i for j, i in enumerate(sub_path) if j % 2 != 0]
-    for obj in object_ids:
-        if '{' not in obj:
-            return path
-    if(len(object_ids) >= 1):
-        arg_str = object_ids[0].replace('{', '').replace('}', '')
-        for i in range(len(object_ids)-1):
-                res = object_ids[i+1].replace('{', ', ').replace('}', '')
-                arg_str += res
-        return arg_str
-    else:
-        return arg_str
+    arg_list = []
+
+    for sub in sub_path:
+        if '{' in sub:
+            arg_list.append(sub.replace('{', '').replace('}', ''))
+
+    if len(arg_list) >= 1 :
+        arg_str = arg_list[0]
+        for i in range(len(arg_list)-1):
+            arg_str = arg_str + ', ' + arg_list[i+1]
+    
+    return arg_str
 
 def get_path_parameters(path):
     ''' get path specific parameters to create a either collection path or instance path'''
     sub_path = re.split(r"\/", path)
-    object_ids = [i for j, i in enumerate(sub_path) if j % 2 != 0]
-    if(len(object_ids) >= 1):
+    arg_list = []
+      
+    for sub in sub_path:
+        if '{' in sub:
+            arg_list.append(sub.replace('{', '').replace('}', ''))
+
+    if(len(arg_list) >= 1):
         num = 0
-        for res in object_ids:
+        for res in arg_list:
             if (path.find(res)!=1):
-                path = path.replace(res, '{{{0}}}'.format(num))
+                path = path.replace(res, '{0}'.format(num))
                 num = num +1
-        return path
-    else:
-        return path
+    return path
 
 def get_wildcard_parameters(arg_str):
     arguments = re.split(', ', arg_str)

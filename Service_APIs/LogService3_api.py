@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# LogService3 does not have a Collection API
-
-
 # LogService3 Collection API
 class LogService3CollectionAPI(Resource):
 	def __init__(self):
@@ -60,22 +57,22 @@ class LogService3CollectionAPI(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService3 Collection post called')
 		return 'POST is not a supported command for LogService3CollectionAPI', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService3 Collection put called')
 		return 'PUT is not a supported command for LogService3CollectionAPI', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService3 Collection patch called')
 		return 'PATCH is not a supported command for LogService3CollectionAPI', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ResourceBlockId, ComputerSystemId):
 		logging.info('LogService3 Collection delete called')
 		return 'DELETE is not a supported command for LogService3CollectionAPI', 405
 
@@ -93,22 +90,22 @@ class LogService3API(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService3 post called')
 		return 'POST is not a supported command for LogService3API', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService3 put called')
 		return 'PUT is not a supported command for LogService3API', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService3 patch called')
 		return 'PATCH is not a supported command for LogService3API', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ResourceBlockId, ComputerSystemId, LogServiceId):
 		logging.info('LogService3 delete called')
 		return 'DELETE is not a supported command for LogService3API', 405
 

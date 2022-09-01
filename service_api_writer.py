@@ -67,7 +67,11 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
     
     # Write GET method
     outfile.write("\t# HTTP GET\n")
-    if collection_path == '':
+    if instance == '':
+        outfile.write("\tdef get(self):\n")
+        outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
+        outfile.write("\t\tpath = os.path.join(self.root, 'index.json')\n")
+    elif collection_path == '':
         outfile.write("\tdef get(self):\n")
         outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
         outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(instance))
@@ -76,7 +80,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
         # print(original_path)
         arg_str = get_function_parameters(original_path)
         # print(arg_str)
-        if arg_str == original_path:
+        if arg_str == '':
             outfile.write("\tdef get(self):\n")
             outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
             outfile.write("\t\tpath = os.path.join(self.root, '{0}', 'index.json')\n".format(original_path))
@@ -90,7 +94,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
 
     # Write POST method
     outfile.write("\t# HTTP POST\n")
-    if collection_path != '' and arg_str != original_path:
+    if collection_path != '' and arg_str != '':
         outfile.write("\tdef post(self, {0}):\n".format(arg_str))
     else:
         outfile.write("\tdef post(self):\n")
@@ -100,7 +104,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
 
     # Write PUT method
     outfile.write("\t# HTTP PUT\n")
-    if collection_path != '' and arg_str != original_path:
+    if collection_path != '' and arg_str != '':
         outfile.write("\tdef put(self, {0}):\n".format(arg_str))
     else:
         outfile.write("\tdef put(self):\n")
@@ -110,7 +114,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
 
     # Write PATCH method
     outfile.write("\t# HTTP PATCH\n")
-    if collection_path != '' and arg_str != original_path:
+    if collection_path != '' and arg_str != '':
         outfile.write("\tdef patch(self, {0}):\n".format(arg_str))
     else:
         outfile.write("\tdef patch(self):\n")
@@ -120,7 +124,7 @@ def write_service_singleton_api(outfile, resource, collection_path, instance):
 
     # Write DELETE method
     outfile.write("\t# HTTP DELETE\n")
-    if collection_path != '' and arg_str != original_path:
+    if collection_path != '' and arg_str != '':
         outfile.write("\tdef delete(self, {0}):\n".format(arg_str))
     else:
         outfile.write("\tdef delete(self):\n")
@@ -210,32 +214,19 @@ def write_servicetype_singleton_api(outfile, resource, collection_path, instance
     # Write GET method
     outfile.write("\t# HTTP GET\n")
     original_path = collection_path[1:] + '/' + instance
-
-    sub_path = collection_path[1:].split("/")
-    object_ids = [i for j, i in enumerate(sub_path) if j % 2 != 0]
-    if object_ids:
-        for obj in object_ids:
-            if '{' in obj :
-                arg_str = get_function_parameters(original_path)
-                outfile.write("\tdef get(self, {0}):\n".format(arg_str))
-                outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
-
-                new_collection_path = get_path_parameters(original_path)
-                outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
-
-                break
-            else:
-                arg_str = instance.replace('{', '').replace('}', '')
-                original_path = collection_path[1:] + '/' + '{0}'
-                outfile.write("\tdef get(self, {0}):\n".format(arg_str))
-                outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
-                outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(original_path, arg_str))
+    arg_str = get_function_parameters(original_path)
+    if arg_str == '':
+        outfile.write("\tdef get(self):\n")
     else:
-        arg_str = instance.replace('{', '').replace('}', '')
-        original_path = collection_path[1:] + '/' + '{0}'
         outfile.write("\tdef get(self, {0}):\n".format(arg_str))
-        outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
-        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(original_path, arg_str))
+    outfile.write("\t\tlogging.info('{0} get called')\n".format(resource))
+
+    new_collection_path = get_path_parameters(original_path)
+    if new_collection_path == '' or  new_collection_path == '/':
+        outfile.write("\t\tpath = create_path(self.root, 'index.json')\n")
+    else:
+        outfile.write("\t\tpath = create_path(self.root, '{0}', 'index.json').format({1})\n".format(new_collection_path, arg_str))
+
     outfile.write("\t\treturn get_json_data (path)\n\n")
 
     # Write POST method

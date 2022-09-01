@@ -90,22 +90,22 @@ class SessionAPI(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, SessionId):
 		logging.info('Session post called')
 		return 'POST is not a supported command for SessionAPI', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, SessionId):
 		logging.info('Session put called')
 		return 'PUT is not a supported command for SessionAPI', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, SessionId):
 		logging.info('Session patch called')
 		return 'PATCH is not a supported command for SessionAPI', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, SessionId):
 		logging.info('Session delete called')
 		return 'DELETE is not a supported command for SessionAPI', 405
 

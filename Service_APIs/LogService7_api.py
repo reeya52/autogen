@@ -60,22 +60,22 @@ class LogService7API(Resource):
 		return get_json_data (path)
 
 	# HTTP POST
-	def post(self):
+	def post(self, ComputerSystemId, MemoryId):
 		logging.info('LogService7 post called')
 		return 'POST is not a supported command for LogService7API', 405
 
 	# HTTP PUT
-	def put(self):
+	def put(self, ComputerSystemId, MemoryId):
 		logging.info('LogService7 put called')
 		return 'PUT is not a supported command for LogService7API', 405
 
 	# HTTP PATCH
-	def patch(self):
+	def patch(self, ComputerSystemId, MemoryId):
 		logging.info('LogService7 patch called')
 		return 'PATCH is not a supported command for LogService7API', 405
 
 	# HTTP DELETE
-	def delete(self):
+	def delete(self, ComputerSystemId, MemoryId):
 		logging.info('LogService7 delete called')
 		return 'DELETE is not a supported command for LogService7API', 405
 

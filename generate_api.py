@@ -94,7 +94,7 @@ if __name__=='__main__':
     # if Redfish URIs has only one path
     if(type(resource_paths) is str):
         head, tail= os.path.split(resource_paths)
-        head = head.replace('/redfish/v1/', '')
+        head = head.replace('/redfish/v1', '')
         resource_num = resource
         program_name = '{0}_api.py'.format(resource)
         status = create_api_program(resource_paths, program_name, resource, resource_num, head, tail)
@@ -106,7 +106,7 @@ if __name__=='__main__':
     elif(type(resource_paths) is list):
         for path in resource_paths:
             head, tail= os.path.split(path)
-            head = head.replace('/redfish/v1/', '')
+            head = head.replace('/redfish/v1', '')
             # base program name is different for different paths
             resource_num = resource + str(num)
             program_name = '{0}_api.py'.format(resource_num)
