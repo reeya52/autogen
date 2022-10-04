@@ -2,11 +2,14 @@
 Resource implementation tool for Swordfish Emulator.
 
 To auto generate resource implementation for all Redfish/Swordfish resources, run script_api.py program.
+
 This program will generate API implementation code for resources and services.
+
 Run the following command:
 ``
 python3 script_api.py [schema_path]
 ``
+
 [schema_path] should be the path of XML schema directory.
 
 
