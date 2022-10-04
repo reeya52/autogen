@@ -99,6 +99,7 @@ def write_program_end(outfile, base_template_name, resource_path):
     arg_list = get_path_variables(resource_path)
     num = 0
     outfile.write("\t\tg = d.replace('{0}', '{1}')\n".format(arg_list[0], num))
+    num = num + 1
     for i in range(len(arg_list)-1):
         outfile.write("\t\tg = g.replace('{0}', '{1}')\n".format(arg_list[i+1], num))
         num = num + 1
