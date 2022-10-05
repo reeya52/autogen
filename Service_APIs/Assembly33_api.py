@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly33 does not have a Collection API
+
+
 # Assembly33 API
 class Assembly33API(Resource):
 	def __init__(self):

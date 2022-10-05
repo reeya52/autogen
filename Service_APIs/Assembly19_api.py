@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly19 does not have a Collection API
+
+
 # Assembly19 API
 class Assembly19API(Resource):
 	def __init__(self):

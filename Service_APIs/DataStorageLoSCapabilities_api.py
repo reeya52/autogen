@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# DataStorageLoSCapabilities does not have a Collection API
+
+
 # DataStorageLoSCapabilities API
 class DataStorageLoSCapabilitiesAPI(Resource):
 	def __init__(self):

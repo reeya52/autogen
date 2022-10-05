@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Bios0 does not have a Collection API
+
+
 # Bios0 API
 class Bios0API(Resource):
 	def __init__(self):

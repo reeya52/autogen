@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly18 does not have a Collection API
+
+
 # Assembly18 API
 class Assembly18API(Resource):
 	def __init__(self):

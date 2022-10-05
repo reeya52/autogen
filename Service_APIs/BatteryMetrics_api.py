@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# BatteryMetrics does not have a Collection API
+
+
 # BatteryMetrics API
 class BatteryMetricsAPI(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# PCIeSlots does not have a Collection API
+
+
 # PCIeSlots API
 class PCIeSlotsAPI(Resource):
 	def __init__(self):

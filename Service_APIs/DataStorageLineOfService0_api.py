@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# DataStorageLineOfService0 does not have a Collection API
-
-
 # DataStorageLineOfService0 Collection API
 class DataStorageLineOfService0CollectionAPI(Resource):
 	def __init__(self):

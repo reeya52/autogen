@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly8 does not have a Collection API
+
+
 # Assembly8 API
 class Assembly8API(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# IOConnectivityLoSCapabilities does not have a Collection API
+
+
 # IOConnectivityLoSCapabilities API
 class IOConnectivityLoSCapabilitiesAPI(Resource):
 	def __init__(self):

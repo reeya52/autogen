@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# ProcessorMetrics3 does not have a Collection API
+
+
 # ProcessorMetrics3 API
 class ProcessorMetrics3API(Resource):
 	def __init__(self):

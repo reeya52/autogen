@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# CertificateLocations does not have a Collection API
+
+
 # CertificateLocations API
 class CertificateLocationsAPI(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly13 does not have a Collection API
+
+
 # Assembly13 API
 class Assembly13API(Resource):
 	def __init__(self):

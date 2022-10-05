@@ -39,13 +39,12 @@ from flask import Flask, request
 from flask_restful import Resource
 from .constants import *
 from api_emulator.utils import update_collections_json, create_path, get_json_data, create_and_patch_object, delete_object, patch_object, put_object, delete_collection, create_collection
-from .templates.TelemetryService import get_TelemetryService_instance
 
 config = {}
 
 INTERNAL_ERROR = 500
 
-# SessionService does not have a Collection API
+# TelemetryService does not have a Collection API
 
 
 # TelemetryService API

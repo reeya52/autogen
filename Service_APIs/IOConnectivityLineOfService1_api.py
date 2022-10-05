@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# IOConnectivityLineOfService1 does not have a Collection API
-
-
 # IOConnectivityLineOfService1 Collection API
 class IOConnectivityLineOfService1CollectionAPI(Resource):
 	def __init__(self):

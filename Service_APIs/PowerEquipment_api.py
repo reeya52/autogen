@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# PowerEquipment does not have a Collection API
+
+
 # PowerEquipment API
 class PowerEquipmentAPI(Resource):
 	def __init__(self):

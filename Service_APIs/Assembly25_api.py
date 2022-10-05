@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly25 does not have a Collection API
+
+
 # Assembly25 API
 class Assembly25API(Resource):
 	def __init__(self):

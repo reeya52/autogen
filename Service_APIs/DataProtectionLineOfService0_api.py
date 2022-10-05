@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# DataProtectionLineOfService0 does not have a Collection API
-
-
 # DataProtectionLineOfService0 Collection API
 class DataProtectionLineOfService0CollectionAPI(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly11 does not have a Collection API
+
+
 # Assembly11 API
 class Assembly11API(Resource):
 	def __init__(self):

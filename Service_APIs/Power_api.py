@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Power does not have a Collection API
+
+
 # Power API
 class PowerAPI(Resource):
 	def __init__(self):

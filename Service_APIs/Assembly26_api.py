@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly26 does not have a Collection API
+
+
 # Assembly26 API
 class Assembly26API(Resource):
 	def __init__(self):

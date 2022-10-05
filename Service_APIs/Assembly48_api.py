@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly48 does not have a Collection API
+
+
 # Assembly48 API
 class Assembly48API(Resource):
 	def __init__(self):

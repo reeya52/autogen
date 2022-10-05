@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# NetworkDeviceFunctionMetrics does not have a Collection API
+
+
 # NetworkDeviceFunctionMetrics API
 class NetworkDeviceFunctionMetricsAPI(Resource):
 	def __init__(self):

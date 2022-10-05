@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly44 does not have a Collection API
+
+
 # Assembly44 API
 class Assembly44API(Resource):
 	def __init__(self):

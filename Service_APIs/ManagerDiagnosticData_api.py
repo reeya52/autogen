@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# ManagerDiagnosticData does not have a Collection API
+
+
 # ManagerDiagnosticData API
 class ManagerDiagnosticDataAPI(Resource):
 	def __init__(self):

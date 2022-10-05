@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# DataSecurityLineOfService1 does not have a Collection API
-
-
 # DataSecurityLineOfService1 Collection API
 class DataSecurityLineOfService1CollectionAPI(Resource):
 	def __init__(self):

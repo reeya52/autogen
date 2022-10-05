@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# ClassOfService0 does not have a Collection API
-
-
 # ClassOfService0 Collection API
 class ClassOfService0CollectionAPI(Resource):
 	def __init__(self):

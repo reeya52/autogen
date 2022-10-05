@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# SwitchMetrics does not have a Collection API
+
+
 # SwitchMetrics API
 class SwitchMetricsAPI(Resource):
 	def __init__(self):

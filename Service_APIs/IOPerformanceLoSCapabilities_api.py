@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# IOPerformanceLoSCapabilities does not have a Collection API
+
+
 # IOPerformanceLoSCapabilities API
 class IOPerformanceLoSCapabilitiesAPI(Resource):
 	def __init__(self):

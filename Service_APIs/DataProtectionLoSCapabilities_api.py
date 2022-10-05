@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# DataProtectionLoSCapabilities does not have a Collection API
+
+
 # DataProtectionLoSCapabilities API
 class DataProtectionLoSCapabilitiesAPI(Resource):
 	def __init__(self):

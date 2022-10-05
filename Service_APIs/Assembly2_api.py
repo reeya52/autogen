@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly2 does not have a Collection API
+
+
 # Assembly2 API
 class Assembly2API(Resource):
 	def __init__(self):

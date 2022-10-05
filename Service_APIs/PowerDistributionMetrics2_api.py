@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# PowerDistributionMetrics2 does not have a Collection API
+
+
 # PowerDistributionMetrics2 API
 class PowerDistributionMetrics2API(Resource):
 	def __init__(self):

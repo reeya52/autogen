@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# IOPerformanceLineOfService0 does not have a Collection API
-
-
 # IOPerformanceLineOfService0 Collection API
 class IOPerformanceLineOfService0CollectionAPI(Resource):
 	def __init__(self):

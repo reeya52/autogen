@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# PortMetrics14 does not have a Collection API
+
+
 # PortMetrics14 API
 class PortMetrics14API(Resource):
 	def __init__(self):

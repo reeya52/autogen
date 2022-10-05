@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# EnvironmentMetrics18 does not have a Collection API
+
+
 # EnvironmentMetrics18 API
 class EnvironmentMetrics18API(Resource):
 	def __init__(self):

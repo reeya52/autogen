@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly36 does not have a Collection API
+
+
 # Assembly36 API
 class Assembly36API(Resource):
 	def __init__(self):

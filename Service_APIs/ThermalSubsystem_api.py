@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# ThermalSubsystem does not have a Collection API
+
+
 # ThermalSubsystem API
 class ThermalSubsystemAPI(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# SecureBoot2 does not have a Collection API
+
+
 # SecureBoot2 API
 class SecureBoot2API(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# PowerSubsystem does not have a Collection API
+
+
 # PowerSubsystem API
 class PowerSubsystemAPI(Resource):
 	def __init__(self):

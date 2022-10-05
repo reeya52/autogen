@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly17 does not have a Collection API
+
+
 # Assembly17 API
 class Assembly17API(Resource):
 	def __init__(self):

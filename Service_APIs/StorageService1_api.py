@@ -44,9 +44,6 @@ config = {}
 
 INTERNAL_ERROR = 500
 
-# StorageService1 does not have a Collection API
-
-
 # StorageService1 Collection API
 class StorageService1CollectionAPI(Resource):
 	def __init__(self):

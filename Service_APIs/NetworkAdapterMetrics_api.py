@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# NetworkAdapterMetrics does not have a Collection API
+
+
 # NetworkAdapterMetrics API
 class NetworkAdapterMetricsAPI(Resource):
 	def __init__(self):

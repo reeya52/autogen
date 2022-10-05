@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Assembly35 does not have a Collection API
+
+
 # Assembly35 API
 class Assembly35API(Resource):
 	def __init__(self):

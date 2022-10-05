@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# Bios2 does not have a Collection API
+
+
 # Bios2 API
 class Bios2API(Resource):
 	def __init__(self):

@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# MemoryMetrics1 does not have a Collection API
+
+
 # MemoryMetrics1 API
 class MemoryMetrics1API(Resource):
 	def __init__(self):

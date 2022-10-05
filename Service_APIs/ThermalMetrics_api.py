@@ -44,6 +44,9 @@ config = {}
 
 INTERNAL_ERROR = 500
 
+# ThermalMetrics does not have a Collection API
+
+
 # ThermalMetrics API
 class ThermalMetricsAPI(Resource):
 	def __init__(self):
