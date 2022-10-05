@@ -70,7 +70,7 @@ def add_service_resource_file(resource_num, path):
         #         file.write(add_resource_instance)
 
         # return 'Service Resource added in the "add_resource.txt" file'
-        with open("add_resource", "a+") as file:
+        with open("add_service_resource", "a+") as file:
             file.seek(0)
             for line in file:
                 if add_resource_instance in line:
