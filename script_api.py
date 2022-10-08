@@ -103,6 +103,8 @@ if __name__=='__main__':
                 continue
 
             if(type(resource_paths) is str):
+                if resource_paths == '/redfish/v1':
+                    resource_paths = resource_paths + '/'
                 head, tail= os.path.split(resource_paths)
                 head = head.replace('/redfish/v1', '')
                 resource_num = resource
@@ -127,6 +129,8 @@ if __name__=='__main__':
                     print(add_resource_file(resource_num, resource_paths))
             elif(type(resource_paths) is list):
                 for path in resource_paths:
+                    if path == '/redfish/v1':
+                        path = path + '/'
                     head, tail= os.path.split(path)
                     head = head.replace('/redfish/v1', '')
                     # base program name is different for different paths

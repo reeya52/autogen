@@ -115,6 +115,8 @@ if __name__=='__main__':
 
     # if Redfish URIs has only one path
     if(type(resource_paths) is str):
+        if resource_paths == '/redfish/v1':
+            resource_paths = resource_paths + '/'
         head, tail= os.path.split(resource_paths)
         head = head.replace('/redfish/v1', '')
         resource_num = resource
@@ -128,6 +130,8 @@ if __name__=='__main__':
     # if Redfish URIs has list of paths
     elif(type(resource_paths) is list):
         for path in resource_paths:
+            if path == '/redfish/v1':
+                path = path + '/'
             head, tail= os.path.split(path)
             head = head.replace('/redfish/v1', '')
             # base program name is different for different paths

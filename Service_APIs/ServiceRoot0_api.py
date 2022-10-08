@@ -56,7 +56,7 @@ class ServiceRoot0API(Resource):
 	# HTTP GET
 	def get(self):
 		logging.info('ServiceRoot0 get called')
-		path = os.path.join(self.root, 'redfish/v1', 'index.json')
+		path = os.path.join(self.root, 'index.json')
 		return get_json_data (path)
 
 	# HTTP POST
