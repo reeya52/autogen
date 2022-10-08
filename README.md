@@ -18,6 +18,7 @@ Run the following command:
 ``
 python script_template.py [xml_schema_path] [json_schema_path]
 ``
+
 [xml_schema_path] should be the path of XML schema directory.
 
 [json_schema_path] should be the path of JSON schema directory.
