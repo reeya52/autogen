@@ -12,6 +12,15 @@ python script_api.py [schema_path]
 
 [schema_path] should be the path of XML schema directory.
 
+To auto generate template code for all Redfish/Swordfish resources, run script_template.py program.
+
+Run the following command:
+``
+python script_template.py [xml_schema_path] [json_schema_path]
+``
+[xml_schema_path] should be the path of XML schema directory.
+
+[json_schema_path] should be the path of JSON schema directory.
 
 To generate resource implementation for a specific resource use following programs:
 - generate_api.py 
@@ -21,7 +30,7 @@ To generate resource implementation for a specific resource use following progra
     - This program will create API implementation code for the service and/or subservice in 'Service APIs' folder. 
     - Input to this program would be XML schema URL for the service and/or subservice.
 
-For now, you can only create template code for each resource individually.
+To generate template file for each individual resource, run following program -
 - generate_template.py
     - This program will generate template code for the resource in 'Templates' folder.
     - Input to this program would be JSON and XML schema URL for the resource.
